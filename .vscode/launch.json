@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "debug setup verbose",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "args": [
+                "setup",
+                "-v"
+            ]
+        },
+        {
+            "name": "debug setup",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "args": [
+                "setup",
+            ]
+        },
+    ]
+}

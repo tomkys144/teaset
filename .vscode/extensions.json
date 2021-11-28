@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "atishay-jain.all-autocomplete",
+        "streetsidesoftware.code-spell-checker",
+        "ms-azuretools.vscode-docker",
+        "irongeek.vscode-env",
+        "golang.go",
+        "ecmel.vscode-html-css",
+        "zainchen.json",
+        "richie5um2.vscode-sort-json",
+        "redhat.vscode-yaml"
+    ]
+}
