@@ -7,11 +7,23 @@ import (
 	"github.com/joho/godotenv"
 )
 
-func EnvSetup() error {
-	env, _ := godotenv.Read("./.env")
+func EnvSetup(path string, dest string) error {
+	// TODO: add verbose comments
+	if dest == "" {
+		dest = "./.env"
+	} else {
+		dest += "/.env"
+	}
+	env, _ := godotenv.Read(dest)
+	env_new, _ := godotenv.Read(path)
 
-	f, err := os.Create("./.env")
+	for k, v := range env_new {
+		env[k] = v
+	}
+
+	f, err := os.Create(dest)
 	if err != nil {
+		// TODO: add error log
 		return err
 	}
 	defer f.Close()
@@ -116,5 +128,39 @@ func EnvSetup() error {
 	f.Sync()
 
 	err = godotenv.Load("./.env")
+	if err != nil {
+		// TODO: add error log
+		return err
+	}
 	return err
+}
+
+func EnvSilentSetup(path string, dest string) error {
+	// TODO: add verbose comments
+	if dest == "" {
+		dest = "./.env"
+	} else {
+		dest += "/.env"
+	}
+	env, _ := godotenv.Read(dest)
+	env_new, _ := godotenv.Read(path)
+
+	for k, v := range env_new {
+		env[k] = v
+	}
+
+	f, err := os.Create(dest)
+	if err != nil {
+		// TODO: add error log
+		return err
+	}
+	defer f.Close()
+
+	err = godotenv.Write(env, dest)
+	if err != nil {
+		// TODO: add error log
+		return err
+	}
+
+	return nil
 }

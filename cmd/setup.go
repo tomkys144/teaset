@@ -14,7 +14,12 @@ var db *sql.DB
 var err error
 
 func Setup(c *cli.Context) error {
-	internal.EnvSetup()
+	if c.Bool("interactive") {
+		internal.EnvSetup(c.Path("path"), c.Path("destination"))
+	} else {
+
+	}
+
 	// log level setup
 	if c.Bool("verbose") {
 		log.SetLevel(log.InfoLevel)
