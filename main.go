@@ -3,7 +3,6 @@ package main
 import (
 	"os"
 
-	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
@@ -17,13 +16,9 @@ func main() {
 	logFormatter.FullTimestamp = true
 	logrus.SetFormatter(logFormatter)
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
 	app := &cli.App{
-		Name: "Teaset",
+		Name:                 "Teaset",
+		EnableBashCompletion: true,
 		Commands: []*cli.Command{
 			{
 				Name:   "setup",
@@ -31,10 +26,15 @@ func main() {
 				Flags:  setup_flags,
 				Action: cmd.Setup,
 			},
+			{
+				Name:   "env_gen",
+				Usage:  "Setups .env file (Don't need to be run for setup command)",
+				Action: cmd.EnvGen,
+			},
 		},
 	}
 
-	err = app.Run(os.Args)
+	err := app.Run(os.Args)
 
 	if err != nil {
 		log.Fatal(err.Error())

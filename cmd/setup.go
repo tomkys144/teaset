@@ -14,6 +14,7 @@ var db *sql.DB
 var err error
 
 func Setup(c *cli.Context) error {
+	internal.EnvSetup()
 	// log level setup
 	if c.Bool("verbose") {
 		log.SetLevel(log.InfoLevel)
@@ -25,5 +26,11 @@ func Setup(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
+
+	err = internal.CreateTable(db)
+	if err != nil {
+		return err
+	}
+
 	return err
 }
