@@ -14,12 +14,6 @@ var db *sql.DB
 var err error
 
 func Setup(c *cli.Context) error {
-	if c.Bool("interactive") {
-		internal.EnvSetup(c.Path("path"), c.Path("destination"))
-	} else {
-
-	}
-
 	// log level setup
 	if c.Bool("verbose") {
 		log.SetLevel(log.InfoLevel)
@@ -27,15 +21,25 @@ func Setup(c *cli.Context) error {
 		log.SetLevel(log.ErrorLevel)
 	}
 
-	db, err = internal.InitDB()
-	if err != nil {
-		return err
+	// files setup
+
+	if c.Bool("interactive") {
+		internal.EnvSetup(c.Path("path"), c.Path("destination"))
+	} else {
+		internal.EnvSilentSetup(c.Path("path"), c.Path("destination"))
 	}
 
-	err = internal.CreateTable(db)
-	if err != nil {
-		return err
-	}
+	/*
+		db, err = internal.InitDB()
+		if err != nil {
+			return err
+		}
 
+		err = internal.CreateTable(db)
+		if err != nil {
+			return err
+		}
+
+	*/
 	return err
 }

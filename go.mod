@@ -3,6 +3,7 @@ module github.com/tomkys144/gitea-teaset
 go 1.17
 
 require (
+	github.com/antonfisher/nested-logrus-formatter v1.3.1
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/joho/godotenv v1.4.0
 	github.com/sirupsen/logrus v1.8.1

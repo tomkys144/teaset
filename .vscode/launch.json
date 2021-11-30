@@ -29,6 +29,10 @@
             "program": "${workspaceFolder}",
             "args": [
                 "env_gen",
+                "-d",
+                "test/mrdka",
+                "-p",
+                "env.example"
             ]
         },
     ]

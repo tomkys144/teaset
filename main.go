@@ -2,8 +2,9 @@ package main
 
 import (
 	"os"
+	"time"
 
-	"github.com/sirupsen/logrus"
+	nested "github.com/antonfisher/nested-logrus-formatter"
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 
@@ -12,9 +13,13 @@ import (
 
 func main() {
 	// Logrus setup
-	logFormatter := new(logrus.TextFormatter)
-	logFormatter.FullTimestamp = true
-	logrus.SetFormatter(logFormatter)
+	log.SetFormatter(&nested.Formatter{
+		HideKeys:        true,
+		FieldsOrder:     []string{"topic", "event"},
+		ShowFullLevel:   true,
+		TrimMessages:    true,
+		TimestampFormat: time.RFC850,
+	})
 
 	app := &cli.App{
 		Name:                 "Teaset",
@@ -29,6 +34,7 @@ func main() {
 			{
 				Name:   "env_gen",
 				Usage:  "Setups .env file (Don't need to be run for setup command)",
+				Flags:  env_gen_flags,
 				Action: cmd.EnvGen,
 			},
 		},

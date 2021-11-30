@@ -3,14 +3,49 @@ package internal
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/joho/godotenv"
+	log "github.com/sirupsen/logrus"
 )
 
 func EnvSetup(path string, dest string) error {
-	// TODO: add verbose comments
-	if dest == "" {
-		dest = "./.env"
+	if path == "" {
+		var dest_abs string
+		if dest == "" {
+			dest_abs, _ = filepath.Abs("./")
+		} else {
+			dest_abs, _ = filepath.Abs(dest)
+		}
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Infof("Creating .env file in \033[35m%s\033[0m", dest_abs)
+	} else {
+		path_abs, _ := filepath.Abs(path)
+		var dest_abs string
+		if dest == "" {
+			dest_abs, _ = filepath.Abs("./")
+		} else {
+			dest_abs, _ = filepath.Abs(dest)
+		}
+
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Infof("Creating .env file from \033[35m%s\033[0m in \033[35m%s\033[0m", path_abs, dest_abs)
+	}
+	err := os.MkdirAll(dest, os.ModePerm)
+	if err != nil {
+		dest_abs, _ := filepath.Abs(dest)
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Errorf("Could not create/open directory \033[35m%s\033[0m", dest_abs)
+		return err
+	}
+	if dest == "./" {
+		dest = ".env"
 	} else {
 		dest += "/.env"
 	}
@@ -23,7 +58,11 @@ func EnvSetup(path string, dest string) error {
 
 	f, err := os.Create(dest)
 	if err != nil {
-		// TODO: add error log
+		dest_abs, _ := filepath.Abs(dest)
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Errorf("Could not create/open \033[35m%s\033[0m", dest_abs)
 		return err
 	}
 	defer f.Close()
@@ -125,18 +164,73 @@ func EnvSetup(path string, dest string) error {
 		f.WriteString("DB_PWD=\"" + env["DB_PWD"] + "\"\n")
 	}
 
-	f.Sync()
+	// SYNC
+	log.WithFields(log.Fields{
+		"event": "generation",
+		"topic": ".env",
+	}).Info("Writing data to .env file")
 
-	err = godotenv.Load("./.env")
+	err = f.Sync()
 	if err != nil {
-		// TODO: add error log
+		dest_abs, _ := filepath.Abs(dest)
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Errorf("Could not write to \033[35m%s\033[0m", dest_abs)
+		return err
+	}
+
+	err = godotenv.Load(dest)
+	if err != nil {
+		dest_abs, _ := filepath.Abs(dest)
+		log.WithFields(log.Fields{
+			"event": ".env loading",
+			"topic": ".env",
+		}).Errorf("Could not read from \033[35m%s\033[0m", dest_abs)
 		return err
 	}
 	return err
 }
 
 func EnvSilentSetup(path string, dest string) error {
-	// TODO: add verbose comments
+	if path == "" {
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Warning("No input file specified, output .env file will be empty/same as before")
+		var dest_abs string
+		if dest == "" {
+			dest_abs, _ = filepath.Abs("./")
+		} else {
+			dest_abs, _ = filepath.Abs(dest)
+		}
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Infof("Creating .env file in \033[35m%s\033[0m", dest_abs)
+	} else {
+		path_abs, _ := filepath.Abs(path)
+		var dest_abs string
+		if dest == "" {
+			dest_abs, _ = filepath.Abs("./")
+		} else {
+			dest_abs, _ = filepath.Abs(dest)
+		}
+
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Infof("Creating .env file from \033[35m%s\033[0m in \033[35m%s\033[0m", path_abs, dest_abs)
+	}
+	err := os.MkdirAll(dest, os.ModePerm)
+	if err != nil {
+		dest_abs, _ := filepath.Abs(dest)
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Errorf("Could not create/open directory \033[35m%s\033[0m", dest_abs)
+		return err
+	}
 	if dest == "" {
 		dest = "./.env"
 	} else {
@@ -150,17 +244,37 @@ func EnvSilentSetup(path string, dest string) error {
 	}
 
 	f, err := os.Create(dest)
+	dest_abs, _ := filepath.Abs(dest)
 	if err != nil {
-		// TODO: add error log
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Errorf("Could not create/open \033[35m%s\033[0m", dest_abs)
 		return err
 	}
 	defer f.Close()
 
 	err = godotenv.Write(env, dest)
 	if err != nil {
-		// TODO: add error log
+		log.WithFields(log.Fields{
+			"event": "generation",
+			"topic": ".env",
+		}).Errorf("Could not write to \033[35m%s\033[0m", dest_abs)
 		return err
 	}
 
+	err = godotenv.Load(dest)
+	if err != nil {
+		log.WithFields(log.Fields{
+			"event": "loading",
+			"topic": ".env",
+		}).Errorf("Could not read from \033[35m%s\033[0m", dest_abs)
+		return err
+	}
+
+	log.WithFields(log.Fields{
+		"event": "loading",
+		"topic": ".env",
+	}).Infof("Loaded .env file from \033[35m%s\033[0m", dest_abs)
 	return nil
 }

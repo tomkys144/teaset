@@ -6,6 +6,6 @@ import (
 )
 
 func EnvGen(c *cli.Context) error {
-	err := internal.EnvSetup()
+	err := internal.EnvSetup(c.Path("path"), c.Path("destination"))
 	return err
 }
