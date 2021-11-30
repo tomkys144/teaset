@@ -8,6 +8,7 @@
         "ecmel.vscode-html-css",
         "zainchen.json",
         "richie5um2.vscode-sort-json",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "gruntfuggly.todo-tree"
     ]
 }

@@ -1,0 +1,38 @@
+{
+    "gitea-teaset": {
+        "TODO": {
+            "start.go": {
+                "line 9": "TODO : Write 'start' command"
+            },
+            "stop.go": {
+                "line 9": "TODO : Write 'stop' command"
+            },
+            "update.go": {
+                "line 9": "TODO : Write 'update' command"
+            },
+            "version.go": {
+                "line 9": "TODO : Write 'version' command"
+            },
+            "flags.go": {
+                "line 46": "TODO : Add flags for 'start' command",
+                "line 50": "TODO : Add flags for 'stop' command",
+                "line 54": "TODO : Add flags for 'update' command",
+                "line 57": "TODO : Add flags for 'version' command"
+            }
+        },
+        "NOTE": {
+            "start.go": {
+                "line 10": "NOTE : Starts main server task in either detached mode or in running command line"
+            },
+            "stop.go": {
+                "line 10": "NOTE : Sends stop signal to detached process"
+            },
+            "update.go": {
+                "line 10": "NOTE : Downloads either stabel or bleeding edge from github and updates. (Might prompt to rerun setup)"
+            },
+            "version.go": {
+                "line 10": "NOTE : Returns current version (might show newest available)"
+            }
+        }
+    }
+}

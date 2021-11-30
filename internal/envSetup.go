@@ -9,32 +9,20 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func EnvSetup(path string, dest string) error {
-	if path == "" {
-		var dest_abs string
-		if dest == "" {
-			dest_abs, _ = filepath.Abs("./")
-		} else {
-			dest_abs, _ = filepath.Abs(dest)
-		}
-		log.WithFields(log.Fields{
-			"event": "generation",
-			"topic": ".env",
-		}).Infof("Creating .env file in \033[35m%s\033[0m", dest_abs)
+func EnvSetup(source string, dest string) error {
+	sourceAbs, _ := filepath.Abs(source)
+	var destAbs string
+	if dest == "" {
+		destAbs, _ = filepath.Abs("./")
 	} else {
-		path_abs, _ := filepath.Abs(path)
-		var dest_abs string
-		if dest == "" {
-			dest_abs, _ = filepath.Abs("./")
-		} else {
-			dest_abs, _ = filepath.Abs(dest)
-		}
-
-		log.WithFields(log.Fields{
-			"event": "generation",
-			"topic": ".env",
-		}).Infof("Creating .env file from \033[35m%s\033[0m in \033[35m%s\033[0m", path_abs, dest_abs)
+		destAbs, _ = filepath.Abs(dest)
 	}
+
+	log.WithFields(log.Fields{
+		"event": "generation",
+		"topic": ".env",
+	}).Infof("Creating .env file from \033[35m%s\033[0m in \033[35m%s\033[0m", sourceAbs, destAbs)
+
 	err := os.MkdirAll(dest, os.ModePerm)
 	if err != nil {
 		dest_abs, _ := filepath.Abs(dest)
@@ -44,25 +32,22 @@ func EnvSetup(path string, dest string) error {
 		}).Errorf("Could not create/open directory \033[35m%s\033[0m", dest_abs)
 		return err
 	}
-	if dest == "./" {
-		dest = ".env"
-	} else {
-		dest += "/.env"
-	}
-	env, _ := godotenv.Read(dest)
-	env_new, _ := godotenv.Read(path)
 
-	for k, v := range env_new {
+	dest += "/.env"
+	destAbs, _ = filepath.Abs(dest)
+	env, _ := godotenv.Read(dest)
+	envNew, _ := godotenv.Read(source)
+
+	for k, v := range envNew {
 		env[k] = v
 	}
 
 	f, err := os.Create(dest)
 	if err != nil {
-		dest_abs, _ := filepath.Abs(dest)
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not create/open \033[35m%s\033[0m", dest_abs)
+		}).Errorf("Could not create/open \033[35m%s\033[0m", destAbs)
 		return err
 	}
 	defer f.Close()
@@ -172,84 +157,62 @@ func EnvSetup(path string, dest string) error {
 
 	err = f.Sync()
 	if err != nil {
-		dest_abs, _ := filepath.Abs(dest)
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not write to \033[35m%s\033[0m", dest_abs)
+		}).Errorf("Could not write to \033[35m%s\033[0m", destAbs)
 		return err
 	}
 
 	err = godotenv.Load(dest)
 	if err != nil {
-		dest_abs, _ := filepath.Abs(dest)
 		log.WithFields(log.Fields{
 			"event": ".env loading",
 			"topic": ".env",
-		}).Errorf("Could not read from \033[35m%s\033[0m", dest_abs)
+		}).Errorf("Could not read from \033[35m%s\033[0m", destAbs)
 		return err
 	}
 	return err
 }
 
-func EnvSilentSetup(path string, dest string) error {
-	if path == "" {
-		log.WithFields(log.Fields{
-			"event": "generation",
-			"topic": ".env",
-		}).Warning("No input file specified, output .env file will be empty/same as before")
-		var dest_abs string
-		if dest == "" {
-			dest_abs, _ = filepath.Abs("./")
-		} else {
-			dest_abs, _ = filepath.Abs(dest)
-		}
-		log.WithFields(log.Fields{
-			"event": "generation",
-			"topic": ".env",
-		}).Infof("Creating .env file in \033[35m%s\033[0m", dest_abs)
-	} else {
-		path_abs, _ := filepath.Abs(path)
-		var dest_abs string
-		if dest == "" {
-			dest_abs, _ = filepath.Abs("./")
-		} else {
-			dest_abs, _ = filepath.Abs(dest)
-		}
+func EnvSilentSetup(source string, dest string) error {
 
-		log.WithFields(log.Fields{
-			"event": "generation",
-			"topic": ".env",
-		}).Infof("Creating .env file from \033[35m%s\033[0m in \033[35m%s\033[0m", path_abs, dest_abs)
+	sourceAbs, _ := filepath.Abs(source)
+	var destAbs string
+	if dest == "" {
+		destAbs, _ = filepath.Abs("./")
+	} else {
+		destAbs, _ = filepath.Abs(dest)
 	}
+
+	log.WithFields(log.Fields{
+		"event": "generation",
+		"topic": ".env",
+	}).Infof("Creating .env file from \033[35m%s\033[0m in \033[35m%s\033[0m", sourceAbs, destAbs)
+
 	err := os.MkdirAll(dest, os.ModePerm)
 	if err != nil {
-		dest_abs, _ := filepath.Abs(dest)
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not create/open directory \033[35m%s\033[0m", dest_abs)
+		}).Errorf("Could not create/open directory \033[35m%s\033[0m", destAbs)
 		return err
 	}
-	if dest == "" {
-		dest = "./.env"
-	} else {
-		dest += "/.env"
-	}
+	dest += "/.env"
+	destAbs, _ = filepath.Abs(dest)
 	env, _ := godotenv.Read(dest)
-	env_new, _ := godotenv.Read(path)
+	envNew, _ := godotenv.Read(source)
 
-	for k, v := range env_new {
+	for k, v := range envNew {
 		env[k] = v
 	}
 
 	f, err := os.Create(dest)
-	dest_abs, _ := filepath.Abs(dest)
 	if err != nil {
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not create/open \033[35m%s\033[0m", dest_abs)
+		}).Errorf("Could not create/open \033[35m%s\033[0m", destAbs)
 		return err
 	}
 	defer f.Close()
@@ -259,7 +222,7 @@ func EnvSilentSetup(path string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not write to \033[35m%s\033[0m", dest_abs)
+		}).Errorf("Could not write to \033[35m%s\033[0m", destAbs)
 		return err
 	}
 
@@ -268,13 +231,13 @@ func EnvSilentSetup(path string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "loading",
 			"topic": ".env",
-		}).Errorf("Could not read from \033[35m%s\033[0m", dest_abs)
+		}).Errorf("Could not read from \033[35m%s\033[0m", destAbs)
 		return err
 	}
 
 	log.WithFields(log.Fields{
 		"event": "loading",
 		"topic": ".env",
-	}).Infof("Loaded .env file from \033[35m%s\033[0m", dest_abs)
+	}).Infof("Loaded .env file from \033[35m%s\033[0m", destAbs)
 	return nil
 }

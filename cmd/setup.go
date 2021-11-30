@@ -22,24 +22,25 @@ func Setup(c *cli.Context) error {
 	}
 
 	// files setup
-
 	if c.Bool("interactive") {
-		internal.EnvSetup(c.Path("path"), c.Path("destination"))
+		err = internal.EnvSetup(c.Path("source"), c.Path("destination"))
 	} else {
-		internal.EnvSilentSetup(c.Path("path"), c.Path("destination"))
+		err = internal.EnvSilentSetup(c.Path("source"), c.Path("destination"))
+	}
+	if err != nil {
+		return err
 	}
 
-	/*
-		db, err = internal.InitDB()
-		if err != nil {
-			return err
-		}
+	// db setup
+	db, err = internal.InitDB()
+	if err != nil {
+		return err
+	}
 
-		err = internal.CreateTable(db)
-		if err != nil {
-			return err
-		}
+	err = internal.CreateTable(db)
+	if err != nil {
+		return err
+	}
 
-	*/
 	return err
 }
