@@ -2,7 +2,7 @@ package main
 
 import "github.com/urfave/cli/v2"
 
-var setupFlags = []cli.Flag{
+var SetupFlags = []cli.Flag{
 	&cli.BoolFlag{
 		Name:    "verbose",
 		Aliases: []string{"v"},
@@ -27,7 +27,7 @@ var setupFlags = []cli.Flag{
 	},
 }
 
-var env_genFlags = []cli.Flag{
+var Env_genFlags = []cli.Flag{
 	&cli.PathFlag{
 		Name:        "source",
 		Aliases:     []string{"s"},
@@ -42,17 +42,17 @@ var env_genFlags = []cli.Flag{
 	},
 }
 
-var startFlags = []cli.Flag{
+var StartFlags = []cli.Flag{
 	// TODO: Add flags for 'start' command
 }
 
-var stopFlags = []cli.Flag{
+var StopFlags = []cli.Flag{
 	// TODO: Add flags for 'stop' command
 }
 
-var updateFlags = []cli.Flag{
+var UpdateFlags = []cli.Flag{
 	// TODO: Add flags for 'update' command
 }
-var versionFlags = []cli.Flag{
+var VersionFlags = []cli.Flag{
 	// TODO: Add flags for 'version' command
 }

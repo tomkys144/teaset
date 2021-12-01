@@ -1,3 +1,6 @@
+// Teaset
+//
+// Teaset is service desk for gitea
 package main
 
 import (
@@ -11,6 +14,7 @@ import (
 	"github.com/tomkys144/gitea-teaset/cmd"
 )
 
+// Main function. Sets up logrus formatter and cli app
 func main() {
 	// Logrus setup
 	log.SetFormatter(&nested.Formatter{
@@ -28,40 +32,40 @@ func main() {
 			{
 				Name:   "setup",
 				Usage:  "Setups Teaset environment",
-				Flags:  setupFlags,
+				Flags:  SetupFlags,
 				Action: cmd.Setup,
 			},
 			{
 				Name:    "env_gen",
 				Aliases: []string{"env"},
 				Usage:   "Setups .env file (Don't need to be run for setup command)",
-				Flags:   env_genFlags,
+				Flags:   Env_genFlags,
 				Action:  cmd.EnvGen,
 			},
 			{
 				Name:   "start",
 				Usage:  "Starts Gitea server | NOT IMPLEMENTED YET \xf0\x9f\x98\xa2\x0a",
-				Flags:  startFlags,
+				Flags:  StartFlags,
 				Action: cmd.Start,
 			},
 			{
 				Name:   "stop",
 				Usage:  "Stops Gitea server | NOT IMPLEMENTED YET \xf0\x9f\x98\xa2\x0a",
-				Flags:  stopFlags,
+				Flags:  StopFlags,
 				Action: cmd.Stop,
 			},
 			{
 				Name:    "update",
 				Aliases: []string{"up"},
 				Usage:   "Updates Teaset to newest version | NOT IMPLEMENTED YET \xf0\x9f\x98\xa2\x0a",
-				Flags:   updateFlags,
+				Flags:   UpdateFlags,
 				Action:  cmd.Update,
 			},
 			{
 				Name:    "version",
 				Aliases: []string{"v"},
 				Usage:   "Displays current Teaset version | NOT IMPLEMENTED YET \xf0\x9f\x98\xa2\x0a",
-				Flags:   versionFlags,
+				Flags:   VersionFlags,
 				Action:  cmd.Version,
 			},
 		},
