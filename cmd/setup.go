@@ -7,7 +7,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 
-	"github.com/tomkys144/gitea-teaset/internal"
+	"github.com/tomkys144/teaset/internal"
 )
 
 var db *sql.DB
@@ -31,6 +31,10 @@ func Setup(c *cli.Context) error {
 		return err
 	}
 
+	err = internal.FileSetup()
+	if err != nil {
+		return err
+	}
 	// db setup
 	db, err = internal.InitDB()
 	if err != nil {

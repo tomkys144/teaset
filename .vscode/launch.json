@@ -1,39 +1,43 @@
 {
-    "configurations": [
-        {
-            "name": "debug setup verbose",
-            "type": "go",
-            "request": "launch",
-            "mode": "debug",
-            "program": "${workspaceFolder}",
-            "args": [
-                "setup",
-                "-v"
-            ]
-        },
-        {
-            "name": "debug setup",
-            "type": "go",
-            "request": "launch",
-            "mode": "debug",
-            "program": "${workspaceFolder}",
-            "args": [
-                "setup",
-            ]
-        },
-        {
-            "name": "debug env_gen",
-            "type": "go",
-            "request": "launch",
-            "mode": "debug",
-            "program": "${workspaceFolder}",
-            "args": [
-                "env_gen",
-                "-d",
-                "test/mrdka",
-                "-p",
-                "env.example"
-            ]
-        },
-    ]
+	"configurations": [
+		{
+			"name": "debug setup verbose",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}",
+			"args": [
+				"setup",
+				"-v",
+				"-d",
+				"test/",
+				"-s",
+				"env.example"
+			]
+		},
+		{
+			"name": "debug setup",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}",
+			"args": [
+				"setup",
+			]
+		},
+		{
+			"name": "debug env_gen",
+			"type": "go",
+			"request": "launch",
+			"mode": "debug",
+			"program": "${workspaceFolder}",
+			"args": [
+				"env_gen",
+				"-d",
+				"test/",
+				"-s",
+				"env.example"
+			]
+		},
+	]
 }

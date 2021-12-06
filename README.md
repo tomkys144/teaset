@@ -6,6 +6,39 @@
 
 ### [Homepage](https://tomkys144.github.io/teaset/)
 
+## Roadmap
+
+- [ ] fully automated setup
+- [ ] Displays fully autonomous environment, which is user-friendly for non-programmeres in which users can:
+	- [ ] Create issues
+	 - [ ] Communicate with developers
+	- [ ] Create feature requests
+	- [ ] Upload files linked to the issue
+- [ ] receives emails and telegram messages and creates issues from them
+
+## Instalation
+
+```sh
+go install github.com/tomkys144/teaset
+```
+now you can choose two options:
+
+### A) Interactive setup
+
+```sh
+./$GOPATH/bin/teaset setup --interactive
+```
+here you get all options asked in command linked
+
+### B) Automated setup
+
+```sh
+wget https://raw.githubusercontent.com/tomkys144/teaset/dev/.env.example -O /path/to/.env.example
+```
+now edit values in `/path/to/.env.example`
+```sh
+teaset setup -s /path/to/.env.example -d /path/to/prefered/installation/directory
+```
 
 ## Author
 

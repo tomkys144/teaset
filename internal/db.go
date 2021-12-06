@@ -63,8 +63,9 @@ func CreateTable(db *sql.DB) error {
 	}
 
 	log.WithFields(log.Fields{
-		"event": "Tables creation",
-		"topic": "DB",
+		"event":   "Tables creation",
+		"topic":   "DB",
+		"details": err.Error(),
 	}).Infof("Table %s created.\nRows affected: %d", "Projects", result.RowsAffected)
 	return err
 }

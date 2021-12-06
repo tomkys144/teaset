@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/tomkys144/gitea-teaset/internal"
+	"github.com/tomkys144/teaset/internal"
 	"github.com/urfave/cli/v2"
 )
 

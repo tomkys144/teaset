@@ -25,16 +25,14 @@ func EnvSetup(source string, dest string) error {
 
 	err := os.MkdirAll(dest, os.ModePerm)
 	if err != nil {
-		dest_abs, _ := filepath.Abs(dest)
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not create/open directory \033[35m%s\033[0m", dest_abs)
+		}).Errorln(err.Error())
 		return err
 	}
 
 	dest += "/.env"
-	destAbs, _ = filepath.Abs(dest)
 	env, _ := godotenv.Read(dest)
 	envNew, _ := godotenv.Read(source)
 
@@ -47,7 +45,7 @@ func EnvSetup(source string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not create/open \033[35m%s\033[0m", destAbs)
+		}).Errorln(err.Error())
 		return err
 	}
 	defer f.Close()
@@ -160,7 +158,7 @@ func EnvSetup(source string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not write to \033[35m%s\033[0m", destAbs)
+		}).Errorln(err.Error())
 		return err
 	}
 
@@ -169,7 +167,7 @@ func EnvSetup(source string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": ".env loading",
 			"topic": ".env",
-		}).Errorf("Could not read from \033[35m%s\033[0m", destAbs)
+		}).Errorln(err.Error())
 		return err
 	}
 	return err
@@ -195,7 +193,7 @@ func EnvSilentSetup(source string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not create/open directory \033[35m%s\033[0m", destAbs)
+		}).Errorln(err.Error())
 		return err
 	}
 	dest += "/.env"
@@ -212,7 +210,7 @@ func EnvSilentSetup(source string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not create/open \033[35m%s\033[0m", destAbs)
+		}).Errorln(err.Error())
 		return err
 	}
 	defer f.Close()
@@ -222,7 +220,7 @@ func EnvSilentSetup(source string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "generation",
 			"topic": ".env",
-		}).Errorf("Could not write to \033[35m%s\033[0m", destAbs)
+		}).Errorln(err.Error())
 		return err
 	}
 
@@ -231,7 +229,7 @@ func EnvSilentSetup(source string, dest string) error {
 		log.WithFields(log.Fields{
 			"event": "loading",
 			"topic": ".env",
-		}).Errorf("Could not read from \033[35m%s\033[0m", destAbs)
+		}).Errorln(err.Error())
 		return err
 	}
 

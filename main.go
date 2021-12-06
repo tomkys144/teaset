@@ -11,7 +11,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli/v2"
 
-	"github.com/tomkys144/gitea-teaset/cmd"
+	"github.com/tomkys144/teaset/cmd"
 )
 
 // Main function. Sets up logrus formatter and cli app
@@ -31,14 +31,14 @@ func main() {
 		Commands: []*cli.Command{
 			{
 				Name:   "setup",
-				Usage:  "Setups Teaset environment",
+				Usage:  "Setups Teaset environment\n",
 				Flags:  SetupFlags,
 				Action: cmd.Setup,
 			},
 			{
 				Name:    "env_gen",
 				Aliases: []string{"env"},
-				Usage:   "Setups .env file (Don't need to be run for setup command)",
+				Usage:   "Setups .env file (Don't need to be run for setup command)\n",
 				Flags:   Env_genFlags,
 				Action:  cmd.EnvGen,
 			},
