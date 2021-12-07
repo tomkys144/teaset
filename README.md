@@ -6,6 +6,15 @@
 
 ### [Homepage](https://tomkys144.github.io/teaset/)
 
+## Roadmap
+
+- [ ] fully automated setup
+- [ ] Displays fully autonomous environment, which is user-friendly for non-programmeres in which users can:
+	- [ ] Create issues
+	 - [ ] Communicate with developers
+	- [ ] Create feature requests
+	- [ ] Upload files linked to the issue
+- [ ] receives emails and telegram messages and creates issues from them
 
 ## Author
 
