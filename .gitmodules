@@ -1,0 +1,8 @@
+[submodule "backend"]
+	path = backend
+	url = ../teaset.git
+	branch = release-backend
+[submodule "frontend"]
+	path = frontend
+	url = ../teaset.git
+	branch = release-frontend
