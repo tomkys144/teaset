@@ -8,4 +8,7 @@
 		"tomkys",
 		"urfave"
 	],
+	"files.exclude": {
+		"frontend": true
+	}
 }

@@ -51,9 +51,13 @@ func EnvSetup(source string, dest string) error {
 	defer f.Close()
 
 	// ---- SETUP ------------------
-	// ---- FILES -----
+	// ---- GENERAL -----
 	fmt.Printf("Do you want to setup values for paths?\nIf not values provided in .env file will be used [y/n] (y): ")
 	res := "y"
+	fmt.Scanln(&res)
+	// ---- FILES -----
+	fmt.Printf("Do you want to setup values for paths?\nIf not values provided in .env file will be used [y/n] (y): ")
+	res = "y"
 	fmt.Scanln(&res)
 
 	properSetUp := !(env == nil || env["PATH_HOME"] == "" || env["PATH_CUSTOM"] == "")
