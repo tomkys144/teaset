@@ -1,21 +1,27 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue';
+import { NLayout, NLayoutContent, NLayoutHeader } from 'naive-ui';
+import 'vfonts/FiraSans.css';
 import Menu from './components/Menu.vue';
 </script>
 
 <template>
-  <Menu />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <NLayout>
+    <NLayoutHeader>
+      <Menu />
+    </NLayoutHeader>
+    <NLayoutContent>
+      <router-view></router-view>
+    </NLayoutContent>
+  </NLayout>
 </template>
 
-<style>
+<style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: v-sans, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  font-weight: 400;
 }
 </style>
