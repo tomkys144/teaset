@@ -1,28 +1,31 @@
 <script setup lang="ts">
-  import { NLayout, NLayoutContent, NLayoutHeader } from 'naive-ui'
+  import * as themeJson from '@/assets/theme.json'
+  import Menu from '@/components/Menu.vue'
+  import {
+    NConfigProvider,
+    NLayout,
+    NLayoutContent,
+    NLayoutHeader,
+  } from 'naive-ui'
   import 'vfonts/FiraSans.css'
-  import Menu from './components/Menu.vue'
 </script>
 
 <template>
-  <NLayout>
-    <NLayoutHeader class="header">
-      <Menu />
-    </NLayoutHeader>
-    <NLayoutContent class="content">
-      <router-view />
-    </NLayoutContent>
-  </NLayout>
+  <NConfigProvider :theme-overrides="themeJson">
+    <NLayout>
+      <NLayoutHeader class="header">
+        <Menu />
+      </NLayoutHeader>
+      <NLayoutContent class="content">
+        <router-view />
+      </NLayoutContent>
+    </NLayout>
+  </NConfigProvider>
 </template>
 
 <style lang="scss">
   #app {
-    font-family: v-sans, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
-    font-weight: 400;
   }
 
   .content {

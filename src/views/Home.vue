@@ -6,7 +6,7 @@
 <template>
   <div class="hero">
     <img :src="logo" alt="teaset logo" class="hero-logo" />
-    <NH1>Teaset</NH1>
+    <NH1 class="hero-title">Teaset</NH1>
   </div>
 </template>
 
@@ -20,6 +20,9 @@
     &-logo {
       max-height: 15vw;
       width: 100%;
+    }
+    &-title {
+      font-size: 3rem;
     }
   }
 </style>

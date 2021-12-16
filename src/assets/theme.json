@@ -1,0 +1,9 @@
+{
+  "common": {
+    "fontFamily": "v-sans",
+    "primaryColor": "#354577ff",
+    "primaryColorHover": "#6370a6FF",
+    "primaryColorSuppl": "#6370a6FF",
+    "primaryColorPressed": "#001e4bFF"
+  }
+}
